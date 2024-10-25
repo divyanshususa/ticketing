@@ -7,9 +7,10 @@ const Table = ({ data, type = "admin" }) => {
   const [fromDate, setFromDate] = useState(""); // From date filter state
   const [toDate, setToDate] = useState(""); // To date filter state
   const [companyFilter, setCompanyFilter] = useState(""); // Company filter state
+  const [assignedToFilter, setAssignedToFilter] = useState(""); // Assigned to filter state
   const itemsPerPage = 8;
 
-  // Filter data based on priority, date range, and company name
+  // Filter data based on priority, date range, company name, and assigned to
   const filteredData = data.filter((item) => {
     const matchesPriority = priorityFilter
       ? item.priority === priorityFilter
@@ -22,8 +23,15 @@ const Table = ({ data, type = "admin" }) => {
     const matchesCompany = companyFilter
       ? item?.company_name?.company_name === companyFilter
       : true;
+    const matchesAssignedTo = assignedToFilter
+      ? item?.asigned_to?.name
+          ?.toLowerCase()
+          .includes(assignedToFilter.toLowerCase())
+      : true;
 
-    return matchesPriority && matchesDateRange && matchesCompany;
+    return (
+      matchesPriority && matchesDateRange && matchesCompany && matchesAssignedTo
+    );
   });
 
   // Calculate average response time (in days)
@@ -105,6 +113,15 @@ const Table = ({ data, type = "admin" }) => {
                 </option>
               ))}
             </select>
+
+            {/* Assigned to Filter */}
+            <input
+              type="text"
+              value={assignedToFilter}
+              onChange={(e) => setAssignedToFilter(e.target.value)}
+              className="border p-2"
+              placeholder="Assigned to"
+            />
           </div>
         </>
       )}

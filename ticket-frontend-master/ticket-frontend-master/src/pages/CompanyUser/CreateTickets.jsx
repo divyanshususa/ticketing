@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Button, Modal } from "antd";
+import Axios from "../../Axios";
 const CreateTickets = ({ isModalOpen, setIsModalOpen, fetchData }) => {
   const [formData, setFormData] = useState({
     title: "",
-     priority: "",
+    priority: "",
     description: "",
     image: null,
   });
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,15 +28,14 @@ const CreateTickets = ({ isModalOpen, setIsModalOpen, fetchData }) => {
     // e.preventDefault();
 
     let formDataToSend = new FormData();
-    formDataToSend.append('title', formData.title);
-        formDataToSend.append("priority", formData.priority);
-    formDataToSend.append('description', formData.description);
-    formDataToSend.append('file', formData.image);
-    console.log(formDataToSend, formData)
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("priority", formData.priority);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("file", formData.image);
+    console.log(formDataToSend, formData);
     try {
-
-      const response = await axios.post(
-        "http://localhost:5000/api/ticket/generateTicket",
+      const response = await Axios.post(
+        "/api/ticket/generateTicket",
         formDataToSend,
         {
           headers: {
@@ -46,22 +45,22 @@ const CreateTickets = ({ isModalOpen, setIsModalOpen, fetchData }) => {
           // withCredentials: true
         }
       );
-      console.log('Form submitted successfully:', response.data);
+      console.log("Form submitted successfully:", response.data);
       alert("your ticket created successfully");
-      fetchData()
+      fetchData();
       // Clear form fields after successful submission
       setFormData({
-        title: '',
-        priority:'',
-        description: '',
+        title: "",
+        priority: "",
+        description: "",
         image: null,
       });
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
   const handleOk = () => {
-    handleSubmit()
+    handleSubmit();
     setIsModalOpen(false);
   };
   const handleCancel = () => {

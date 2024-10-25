@@ -2,6 +2,7 @@ import catchAsyncError from "../middlewares/catchAsyncError.js";
 import Ticket from "../model/Ticket.js";
 import errorHandler from "../utils/errorHandler.js";
 import { Company } from "../model/Company.js";
+import { User } from "../model/User.js";
 import getDataUri from "../utils/dataUri.js";
 import cloudinary from "cloudinary";
 import { sendEmail } from "../utils/sendEmail.js"; // Import the sendEmail function
@@ -81,6 +82,7 @@ export const getAdminTickets = catchAsyncError(async (req, res, next) => {
 
 export const asignTicket = catchAsyncError(async (req, res, next) => {
   const { TicketId, userId } = req.body;
+   console.log("userId", userId);
   const ticket = await Ticket.findOne({ _id: TicketId });
   const user = await User.findOne({ _id: userId });
 

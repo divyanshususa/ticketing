@@ -6,11 +6,7 @@ import cors from "cors";
 
 
 app.use(
-  cors({
-    origin: "http://localhost:5173", // Adjust this to the port your frontend is running on
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
+  cors()
 );
 connectDb()
 

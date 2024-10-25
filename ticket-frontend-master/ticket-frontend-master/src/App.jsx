@@ -19,83 +19,6 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import AssignTicket from './pages/admin/AssignTicket'
 import Sidebar from './components/CompanySideBar/Sidebar'
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Layout><HomePage /></Layout>,
-//   },
-//   {
-//     path: "/login",
-//     element: <Layout><Login /></Layout>,
-//   },
-//   {
-//     path: "/sign-up",
-//     element: <Layout><SignUp /></Layout>,
-//   },
-//   {
-//     path: "/company",
-//     element: <c />,
-//     children: [
-//       {
-//         path: "dashboard",
-//         element: <Dashboard />,
-//       },
-//       {
-//         path: "edit-tickets",
-//         element: <EditTickets />,
-//       },
-//       {
-//         path: "create-tickets",
-//         element: <CreateTickets />,
-//       },
-//       {
-//         path: "profile",
-//         element: <Profile />,
-//       },
-//     ],
-//   },
-//   {
-//     path: "/user",
-//     element: <User />,
-//     children: [
-//       {
-//         path: "dashboard",
-//         element: <UserDashboard />,
-//       },
-//       {
-//         path: "update-tickets",
-//         element: <UpdateTickets />,
-//       }
-//       ,
-//       {
-//         path: "profile",
-//         element: <Profile />,
-//       }
-//     ],
-//   },
-//   {
-//     path: "/admin",
-//     element: <Admin />,
-//     children: [
-//       {
-//         path: "dashboard",
-//         element: <AdminDashboard />,
-//       },
-//       {
-//         path: "assign-tickets",
-//         element: <AssignTicket />,
-//       },
-//       {
-//         path: "profile",
-//         element: <Profile />,
-//       },
-//     ]
-//   },
-//   {
-//     path: "/help",
-//     element: <Help />
-//   },
-// ]);
 
 
 function App() {
@@ -128,7 +51,7 @@ console.log("hello");
           <Route path='profile' element={<Profile />} />
         </Route>
         <Route path='/help' element={<Layout><Help /></Layout>} />
-        <Route path='*' element={<Layout><div>error</div></Layout>} />
+        <Route path='*' element={<Layout><div> Page Not Found error</div></Layout>} />
       </Routes>
     </BrowserRouter>
   )

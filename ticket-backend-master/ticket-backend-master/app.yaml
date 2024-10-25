@@ -1,0 +1,15 @@
+runtime: nodejs18
+env: standard
+
+# Optional, instance configuration
+instance_class: F1
+
+# Ensure you install your dependencies on deploy
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  max_instances: 3
+
+# The entry point of your application
+handlers:
+  - url: /.*
+    script: auto

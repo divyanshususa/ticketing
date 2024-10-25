@@ -1,20 +1,21 @@
-
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import Axios from "../../Axios";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function AssignTicket() {
-  const { tickets, allUsersAvailable } = useSelector(state => state.tickets);
+  const { tickets, allUsersAvailable } = useSelector((state) => state.tickets);
   const [selectedUserIdsMap, setSelectedUserIdsMap] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Number of items per page, you can adjust this
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
+  console.log(allUsersAvailable, tickets);
   useEffect(() => {
     // Initialize selectedUserIdsMap with the assigned_to user IDs from the API response
     const initialSelectedUserIdsMap = {};
-    tickets.forEach(ticket => {
-      initialSelectedUserIdsMap[ticket._id] = ticket?.asigned_to?._id || '';
+    tickets.forEach((ticket) => {
+      initialSelectedUserIdsMap[ticket._id] = ticket?.asigned_to?._id || "";
     });
+    console.log("tickets")
     setSelectedUserIdsMap(initialSelectedUserIdsMap);
   }, [tickets]);
 
@@ -24,22 +25,18 @@ function AssignTicket() {
 
     const payload = {
       TicketId: ticketId,
-      userId: userId
+      userId: userId,
     };
-    console.log(payload)
+    console.log(payload);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/ticket/asignTicket",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          // withCredentials: true
-        }
-      );
+      const response = await Axios.post("/api/ticket/asignTicket", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        // withCredentials: true
+      });
 
       console.log(response);
       alert("Ticket has been assigned,check dashboard");
@@ -49,7 +46,10 @@ function AssignTicket() {
   };
 
   const handleUserChange = (e, ticketId) => {
-    const newSelectedUserIdsMap = { ...selectedUserIdsMap, [ticketId]: e.target.value };
+    const newSelectedUserIdsMap = {
+      ...selectedUserIdsMap,
+      [ticketId]: e.target.value,
+    };
     setSelectedUserIdsMap(newSelectedUserIdsMap);
   };
 
@@ -58,25 +58,40 @@ function AssignTicket() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = tickets.slice(indexOfFirstItem, indexOfLastItem);
 
+
   return (
     <>
-      
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Title
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Resolved Status
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Description
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Assign To
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Action
             </th>
           </tr>
@@ -85,14 +100,21 @@ function AssignTicket() {
           {currentItems.map((item) => (
             <tr key={item._id}>
               <td className="px-6 py-4 whitespace-nowrap">{item.title}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{item.resolved_status}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{item.description}</td>
               <td className="px-6 py-4 whitespace-nowrap">
+                {item.resolved_status}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {item.description}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                
+             {/* commment this section to see assign tickets cors issue  */}
                 <select
                   className="block w-full p-2 border border-gray-300 rounded-md"
-                  value={selectedUserIdsMap[item._id] || ''}
+                  value={selectedUserIdsMap[item._id] || ""}
                   onChange={(e) => handleUserChange(e, item._id)}
                 >
+                  
                   <option value="">Select User</option>
                   {allUsersAvailable?.map((user) => (
                     <option key={user?._id} value={user?._id}>

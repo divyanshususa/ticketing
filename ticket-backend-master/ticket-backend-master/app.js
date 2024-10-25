@@ -20,10 +20,9 @@ app.use(helmet());
 
 app.use(morgan("combined"));
 
-app.use(cors({
-    origin: ["http://localhost:5173", "https://susa-complaint.netlify.app", "https://ticket-frontend-wheat.vercel.app", "https://dancing-pothos-665ca9.netlify.app","https://bright-salamander-35a658.netlify.app"],
-    credentials: true
-}))
+app.use(
+  cors()
+);
 
 app.use(cookieParser())
 

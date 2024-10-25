@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import Axios from '../../Axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userData } from '../../app/slices/userSlice';
@@ -36,17 +36,17 @@ const Login = () => {
           company_email: formData.email,
           company_password: formData.password
         };
-        endpoint = "http://localhost:5000/api/company/login"; // Replace with the actual company login endpoint
+        endpoint = "/api/company/login"; // Replace with the actual company login endpoint
       } else {
         loginData = {
           email: formData.email,
           password: formData.password
         };
-        endpoint = "http://localhost:5000/api/login"; // Replace with the actual user login endpoint
+        endpoint = "/api/login"; // Replace with the actual user login endpoint
       }
 
       // Send login data to the corresponding endpoint
-      const response = await axios.post(endpoint, loginData, {
+      const response = await Axios.post(endpoint, loginData, {
         headers: {
           "Content-Type": "application/json",
           // Authorization : "Bearer "
